@@ -1,16 +1,15 @@
-import {useLocation} from "react-router-dom";
-import {useDispatch, useSelector} from "react-redux";
-import {useEffect, useState} from "react";
+import { useLocation } from "react-router-dom";
+import { useSelector } from "react-redux";
 
-export default function LocationInfo() {
-    const {state} = useLocation();
-    const dispatch = useDispatch();
+export function LocationInfo() {
+    const { state } = useLocation();
 
-    const loading = useSelector(store => store.characterReducer.loading);
+    const { loading } = useSelector(({ characterReducer }) => characterReducer);
 
     if (loading || !state ) {
         return (<h2>Loading...</h2>)
     }
+
     return (
         <div>
             LocationInfo

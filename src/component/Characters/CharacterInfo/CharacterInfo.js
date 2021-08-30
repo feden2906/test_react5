@@ -1,9 +1,8 @@
-import {useLocation} from "react-router-dom";
-import {useEffect, useState} from "react";
-import {useDispatch, useSelector} from "react-redux";
+import { useLocation } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
-
-export default function CharacterInfo() {
+export function CharacterInfo() {
     const {state} = useLocation();
     const dispatch = useDispatch();
 
@@ -13,11 +12,9 @@ export default function CharacterInfo() {
 
 
     useEffect(() => {
-
         dispatch({type: 'LOADING'})
 
-
-        fetch(state.location.url)
+        fetch(state.location.url)                                      // TODO винести в сервіси
             .then(value => value.json())
             .then(response => {
                 setLocation(response)

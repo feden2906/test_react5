@@ -1,27 +1,23 @@
-import {useLocation} from "react-router-dom";
-import {useDispatch, useSelector} from "react-redux";
-import {Fragment, useEffect} from "react";
+import { useLocation } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { Fragment, useEffect } from "react";
 
-import {urlApiLocationPage} from "../../../services/API";
-import Pagination from "../../Main/Pagination/Pagination";
-import LocationListCard from "../LocationListCard/LocationListCard";
+import { urlApiLocationPage } from "../../../services";
+import { LocationListCard } from "../LocationListCard";
+import { Pagination } from "../../Main";
 
-
-export default function LocationList() {
+export function LocationList() {
     const {search} = useLocation();
 
-    const info = useSelector(store => store.locationReducers.infoStore);
-    const location = useSelector(store => store.locationReducers.charactersStore);
-    const loading = useSelector(store => store.loadingReducers.loading);
-
+    const { info, location } = useSelector(({locationReducers}) => locationReducers);
+    const { loading } = useSelector(({loadingReducers}) => loadingReducers);
 
     const dispatch = useDispatch();
 
     useEffect(() => {
-
         dispatch({type: 'LOADING'})
 
-        fetch(`${urlApiLocationPage(search)}`)
+        fetch(`${urlApiLocationPage(search)}`)                                      // TODO винести в сервіси
             .then(value => value.json())
             .then(response => {
                 dispatch({type: 'SET_LOCATION', payload: response.results})
@@ -29,8 +25,6 @@ export default function LocationList() {
             })
 
         dispatch({type: 'DONE'})
-
-
     }, [dispatch, search])
 
     if (loading || !location) {
@@ -44,9 +38,10 @@ export default function LocationList() {
                     location.map(value => <LocationListCard item={value} loading={loading} key={value.id}/>)
 
                 }
-
             </div>
-            <Pagination info={info.pages}/>
+            {
+                <Pagination info={info.pages}/>
+            }
         </Fragment>
     )
 }

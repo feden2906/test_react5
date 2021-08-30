@@ -1,10 +1,11 @@
-import {Fragment} from "react";
-import {Link} from "react-router-dom";
+import { Fragment } from "react";
+import { Link } from "react-router-dom";
 
-export default function CharactersListCard({item, loading}) {
+export function CharactersListCard({item, loading}) {
     if (loading) {
         return (<h2>Loading...</h2>)
     }
+
     return (
         <Link to={{
             pathname: `character/${item.id}`,
@@ -22,7 +23,6 @@ export default function CharactersListCard({item, loading}) {
                                 ? <Fragment>Not a person</Fragment>
                                 : item.gender
                         }
-
                     </p>
                 </div>
             </div>
